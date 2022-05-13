@@ -37,10 +37,10 @@ namespace WarriorAnimsFREE
 				if(action == "attack1") timing = 0.6f;
 			}
 			else if(warrior == Warrior.Mage)
-			{
-				if(action == "attack1") timing = 1.1f;
-			}
-			else if(warrior == Warrior.Ninja)
+            {
+                if (action == "attack1") timing = 0.2f;
+            }
+            else if(warrior == Warrior.Ninja)
 			{
 				if(action == "attack1") timing = 0.6f;
 			}

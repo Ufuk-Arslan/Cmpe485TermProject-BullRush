@@ -3,13 +3,17 @@ using UnityEngine;
 
 namespace WarriorAnimsFREE
 {
-	public class WarriorController:SuperStateMachine
+	public class WarriorController : SuperStateMachine
 	{
 		[Header("Components")]
 		public Warrior warrior;
 		public GameObject target;
 		public GameObject weapon;
 		private Rigidbody rb;
+		public Rigidbody orb;
+		public float orb_speed = 15f;
+		public static Rigidbody orb_rb;
+		public static Vector3 orb_vec;
 		[HideInInspector] public SuperCharacterController superCharacterController;
 		[HideInInspector] public WarriorMovementController warriorMovementController;
 		[HideInInspector] public WarriorInputController warriorInputController;
@@ -201,7 +205,15 @@ namespace WarriorAnimsFREE
 		/// </summary>
 		private void Attacking()
 		{
-			if (inputAttack) { Attack1(); }
+			if (inputAttack) {
+				if (orb_rb)
+				{
+					Teleport();
+				} else
+				{
+					Attack1();
+				}
+			}
 		}
 
 		/// <summary>
@@ -214,19 +226,32 @@ namespace WarriorAnimsFREE
 			Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "attack1"));
 		}
 
-		#endregion
+		public void Teleport()
+        {
+			transform.position = orb_rb.position - new Vector3(0, 2, 0);
+			Destroy(orb_rb.gameObject);
+			StartCoroutine(TrailEndWait());
+		}
 
-		#region Locks
+		public IEnumerator TrailEndWait()
+		{
+			yield return new WaitForSeconds(0.3f);
+			transform.GetComponentInChildren<TrailRenderer>().enabled = false;
+		}
 
-		/// <summary>
-		/// Lock character movement and/or action, on a delay for a set time.
-		/// </summary>
-		/// <param name="lockMovement">If set to <c>true</c> lock movement.</param>
-		/// <param name="lockAction">If set to <c>true</c> lock action.</param>
-		/// <param name="timed">If set to <c>true</c> timed.</param>
-		/// <param name="delayTime">Delay time.</param>
-		/// <param name="lockTime">Lock time.</param>
-		public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+			#endregion
+
+			#region Locks
+
+			/// <summary>
+			/// Lock character movement and/or action, on a delay for a set time.
+			/// </summary>
+			/// <param name="lockMovement">If set to <c>true</c> lock movement.</param>
+			/// <param name="lockAction">If set to <c>true</c> lock action.</param>
+			/// <param name="timed">If set to <c>true</c> timed.</param>
+			/// <param name="delayTime">Delay time.</param>
+			/// <param name="lockTime">Lock time.</param>
+			public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
 		{
 			StopCoroutine("_Lock");
 			StartCoroutine(_Lock(lockMovement, lockAction, timed, delayTime, lockTime));
@@ -242,6 +267,12 @@ namespace WarriorAnimsFREE
 				if (lockTime > 0) {
 					yield return new WaitForSeconds(lockTime);
 					UnLock(lockMovement, lockAction);
+					if (!orb_rb)
+					{
+						orb_rb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
+						orb_vec = transform.forward * orb_speed;
+						transform.GetComponentInChildren<TrailRenderer>().enabled = true;
+					}
 				}
 			}
 		}

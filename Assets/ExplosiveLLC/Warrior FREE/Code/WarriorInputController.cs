@@ -10,9 +10,13 @@ namespace WarriorAnimsFREE
 		[HideInInspector] public float inputVertical = 0;
 
 		public Vector3 moveInput { get { return CameraRelativeInput(inputHorizontal, inputVertical); } }
-
+		
 		private void Update()
 		{
+			if (WarriorController.orb_rb)
+			{
+				WarriorController.orb_rb.velocity = WarriorController.orb_vec;
+			}
 			Inputs();
 			Toggles();
 		}
