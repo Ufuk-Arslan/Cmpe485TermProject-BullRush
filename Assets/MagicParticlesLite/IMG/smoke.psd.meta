@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -328,6 +329,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      smoke_1: 21300002
+      smoke_3: 21300006
+      smoke_2: 21300004
+      smoke_7: 21300014
+      smoke_6: 21300012
+      smoke_0: 21300000
+      smoke_5: 21300010
+      smoke_4: 21300008
+      smoke_8: 21300016
   spritePackingTag: 
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1

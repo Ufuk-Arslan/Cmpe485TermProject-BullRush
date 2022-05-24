@@ -105,6 +105,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -613,6 +614,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      swirl_26: 21300052
+      swirl_1: 21300002
+      swirl_13: 21300026
+      swirl_2: 21300004
+      swirl_18: 21300016
+      swirl_15: 21300022
+      swirl_6: 21300012
+      swirl_12: 21300024
+      swirl_16: 21300032
+      swirl_0: 21300000
+      swirl_4: 21300008
+      swirl_5: 21300010
+      swirl_10: 21300020
+      swirl_19: 21300018
+      swirl_8: 21300014
+      swirl_25: 21300050
+      swirl_3: 21300006
+      swirl_14: 21300028
+      swirl_17: 21300034
+      swirl_24: 21300048
   spritePackingTag: 
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1

@@ -72,6 +72,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -496,6 +497,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      splash_15: 21300030
+      splash_5: 21300010
+      splash_1: 21300002
+      splash_9: 21300018
+      splash_14: 21300028
+      splash_2: 21300004
+      splash_13: 21300026
+      splash_8: 21300016
+      splash_12: 21300024
+      splash_11: 21300022
+      splash_10: 21300020
+      splash_3: 21300006
+      splash_0: 21300000
+      splash_4: 21300008
+      splash_6: 21300012
+      splash_7: 21300014
   spritePackingTag: 
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1
