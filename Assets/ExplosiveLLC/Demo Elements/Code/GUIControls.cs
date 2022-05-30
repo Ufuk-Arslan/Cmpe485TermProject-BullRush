@@ -24,7 +24,7 @@ namespace WarriorAnimsFREE
 		private void Attacking()
 		{
 			if (warriorController.MaintainingGround() && warriorController.canAction) {
-					if (GUI.Button(new Rect(25, 85, 100, 30), "Attack1")) { warriorController.Attack1(); }
+					if (GUI.Button(new Rect(25, 85, 100, 30), "Attack1")) { warriorController.Attack1(0); }
 			}
 		}
 

@@ -10,7 +10,7 @@ namespace WarriorAnimsFREE
 		[Header("Movement")]
 		public float movementAcceleration = 90.0f;
 		public float runSpeed = 6f;
-		private readonly float rotationSpeed = 40f;
+		private readonly float rotationSpeed = 10f;
 		public float groundFriction = 50f;
 		[HideInInspector] public Vector3 currentVelocity;
 

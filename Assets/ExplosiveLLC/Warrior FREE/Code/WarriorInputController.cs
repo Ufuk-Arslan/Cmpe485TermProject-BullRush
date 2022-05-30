@@ -5,6 +5,7 @@ namespace WarriorAnimsFREE
 	public class WarriorInputController:MonoBehaviour
 	{
 		[HideInInspector] public bool inputAttack;
+		[HideInInspector] public bool inputProjectile;
 		[HideInInspector] public bool inputJump;
 		[HideInInspector] public float inputHorizontal = 0;
 		[HideInInspector] public float inputVertical = 0;
@@ -17,6 +18,11 @@ namespace WarriorAnimsFREE
 			{
 				WarriorController.orb_rb.velocity = WarriorController.orb_vec;
 			}
+			if (WarriorController.projectile_rb)
+			{
+				WarriorController.projectile_rb.velocity = WarriorController.projectile_vec;
+			}
+
 			Inputs();
 			Toggles();
 		}
@@ -27,6 +33,7 @@ namespace WarriorAnimsFREE
 		private void Inputs()
 		{
 			inputAttack = Input.GetButtonDown("Attack");
+			inputProjectile = Input.GetMouseButton(0);
 			inputJump = Input.GetButtonDown("Jump");
 			inputHorizontal = Input.GetAxisRaw("Horizontal");
 			inputVertical = Input.GetAxisRaw("Vertical");

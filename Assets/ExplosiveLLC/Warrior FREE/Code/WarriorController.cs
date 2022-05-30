@@ -11,9 +11,15 @@ namespace WarriorAnimsFREE
 		public GameObject weapon;
 		private Rigidbody rb;
 		public Rigidbody orb;
-		public float orb_speed = 15f;
+		public Rigidbody projectile;
+		public float orb_speed = 20f;
+		public float projectile_speed = 50f;
 		public static Rigidbody orb_rb;
+		public static Rigidbody projectile_rb;
 		public static Vector3 orb_vec;
+		public static Vector3 projectile_vec;
+		public float orb_cooldown = 1f;
+		public float projectile_cooldown = 0.1f;
 		[HideInInspector] public SuperCharacterController superCharacterController;
 		[HideInInspector] public WarriorMovementController warriorMovementController;
 		[HideInInspector] public WarriorInputController warriorInputController;
@@ -24,6 +30,7 @@ namespace WarriorAnimsFREE
 
 		// Inputs.
 		[HideInInspector] public bool inputAttack;
+		[HideInInspector] public bool inputProjectile;
 		[HideInInspector] public bool inputJump;
 		[HideInInspector] public float inputVertical = 0;
 		[HideInInspector] public float inputHorizontal = 0;
@@ -123,6 +130,7 @@ namespace WarriorAnimsFREE
 				if (!useInputSystem) {
 					if (warriorInputController != null) {
 						inputAttack = warriorInputController.inputAttack;
+						inputProjectile = warriorInputController.inputProjectile;
 						inputJump = warriorInputController.inputJump;
 						moveInput = warriorInputController.moveInput;
 					}
@@ -131,6 +139,7 @@ namespace WarriorAnimsFREE
 				} else {
 					if (warriorInputSystemController != null) {
 						inputAttack = warriorInputSystemController.inputAttack;
+						inputProjectile = warriorInputSystemController.inputProjectile;
 						inputJump = warriorInputSystemController.inputJump;
 						moveInput = warriorInputSystemController.moveInput;
 					}
@@ -205,25 +214,25 @@ namespace WarriorAnimsFREE
 		/// </summary>
 		private void Attacking()
 		{
-			if (inputAttack) {
-				if (orb_rb)
-				{
-					Teleport();
-				} else
-				{
-					Attack1();
-				}
+			if (inputAttack && orb_rb)
+			{
+				Teleport();
+			} else if (inputAttack) {
+				Attack1(1);
+            } else if (inputProjectile)
+            {
+				Attack1(0);
 			}
 		}
 
 		/// <summary>
 		/// First attack in the AttackChain.
 		/// </summary>
-		public void Attack1()
+		public void Attack1(int actionType)
 		{
 			SetAnimatorInt("Action", 1);
 			SetAnimatorTrigger(AnimatorTrigger.AttackTrigger);
-			Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "attack1"));
+			Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "attack1"), actionType);
 		}
 
 		public void Teleport()
@@ -251,14 +260,14 @@ namespace WarriorAnimsFREE
 			/// <param name="timed">If set to <c>true</c> timed.</param>
 			/// <param name="delayTime">Delay time.</param>
 			/// <param name="lockTime">Lock time.</param>
-			public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+			public void Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime, int actionType)
 		{
 			StopCoroutine("_Lock");
-			StartCoroutine(_Lock(lockMovement, lockAction, timed, delayTime, lockTime));
+			StartCoroutine(_Lock(lockMovement, lockAction, timed, delayTime, lockTime, actionType));
 		}
 
 		//Timed -1 = infinite, 0 = no, 1 = yes.
-		public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+		public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime, int actionType)
 		{
 			if (delayTime > 0) { yield return new WaitForSeconds(delayTime); }
 			if (lockMovement) { LockMove(true); }
@@ -267,11 +276,19 @@ namespace WarriorAnimsFREE
 				if (lockTime > 0) {
 					yield return new WaitForSeconds(lockTime);
 					UnLock(lockMovement, lockAction);
-					if (!orb_rb)
-					{
-						orb_rb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
-						orb_vec = transform.forward * orb_speed;
-						transform.GetComponentInChildren<TrailRenderer>().enabled = true;
+					if (Cane.canFire)
+                    {
+						if (actionType == 1 && !orb_rb)
+						{
+							orb_rb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
+							orb_vec = transform.forward * orb_speed;
+							transform.GetComponentInChildren<TrailRenderer>().enabled = true;
+						}
+						else if (actionType == 0)
+						{
+							projectile_rb = Instantiate(projectile, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
+							projectile_vec = transform.forward * projectile_speed;
+						}
 					}
 				}
 			}
