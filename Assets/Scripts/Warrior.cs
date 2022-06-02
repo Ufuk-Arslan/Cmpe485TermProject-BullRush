@@ -7,6 +7,7 @@ public class Warrior : MonoBehaviour
 {
     public static float maxHp = 1000f;
 	public static float curHp = 1000f;
+    public float attackDamage = -10f;
     public Image healthBar;
     public float invincibilityTime = 1f;
     public bool isInvincible = false;

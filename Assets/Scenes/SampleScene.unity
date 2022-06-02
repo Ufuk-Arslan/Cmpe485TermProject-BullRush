@@ -1795,8 +1795,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870374381}
-  m_LocalRotation: {x: 0.07370093, y: -0.5509918, z: 0.048937336, w: 0.8298081}
-  m_LocalPosition: {x: 53.144436, y: 16.390043, z: -23.229052}
+  m_LocalRotation: {x: 0.07370091, y: -0.5509918, z: 0.04893734, w: 0.82980806}
+  m_LocalPosition: {x: 53.14443, y: 16.390043, z: -23.22905}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999976}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2091,8 +2091,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.07370093, y: -0.5509918, z: 0.048937336, w: 0.8298081}
-  m_LocalPosition: {x: 53.144436, y: 16.390043, z: -23.229052}
+  m_LocalRotation: {x: 0.07370091, y: -0.5509918, z: 0.04893734, w: 0.82980806}
+  m_LocalPosition: {x: 53.14443, y: 16.390043, z: -23.22905}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4403,6 +4403,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2313579653238086597, guid: 3ce2ee55234d1784a81ee3585007cf81, type: 3}
       propertyPath: m_Name
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313579653238086597, guid: 3ce2ee55234d1784a81ee3585007cf81, type: 3}
+      propertyPath: m_TagString
       value: Projectile
       objectReference: {fileID: 0}
     m_RemovedComponents: []

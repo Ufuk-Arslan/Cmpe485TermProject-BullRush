@@ -8,6 +8,7 @@ TagManager:
   - Collide
   - Level
   - Boss
+  - Projectile
   layers:
   - Default
   - TransparentFX

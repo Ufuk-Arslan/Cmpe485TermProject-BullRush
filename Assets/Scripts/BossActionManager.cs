@@ -14,6 +14,7 @@ public class BossActionManager : MonoBehaviour {
 	public float attackTime = 0.5f;
 	public bool isAttacking = false;
 	public bool isWalking = false;
+	public bool isDead = false;
 	private Rigidbody rb;
 	private Vector3 direction;
 	Animator myAnimator;
@@ -28,6 +29,12 @@ public class BossActionManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		if (isDead) return;
+		if (curHp < 0) {
+			isDead = true;
+			StartCoroutine(DeathAnimation());
+			return;
+		}
 		direction = hero.transform.position - transform.position;
 		direction.y = 0;
 		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
@@ -35,11 +42,11 @@ public class BossActionManager : MonoBehaviour {
 	
     private void FixedUpdate()
     {
-		if (isAttacking) return;
+		if (isDead || isAttacking) return;
 		if (direction.magnitude < attackDistance)
         {
 			isWalking = false;
-			StartCoroutine(Attack());
+			StartCoroutine(AttackAnimation());
         } else
         {
 			if (!isWalking)
@@ -60,14 +67,17 @@ public class BossActionManager : MonoBehaviour {
 		}
 	}
 
+	private void OnTriggerEnter(Collider other) 
+	{
+		if (other.tag == "Projectile") 
+		{
+			UpdateHp(warrior.attackDamage);
+		}
+	}
+
 	public void UpdateHp(float updateValue) {
 		curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue;
 		Debug.Log(curHp);
-		if (curHp < 0) {
-			ClearAllBool();
-			myAnimator.SetBool ("die", true);
-			// Congratulations
-		}
 	}
 
     void Walk (Vector3 movementDirection)
@@ -75,7 +85,7 @@ public class BossActionManager : MonoBehaviour {
 		rb.MovePosition(transform.position + (movementDirection * moveSpeed * Time.deltaTime));
     }
 
-	IEnumerator Attack()
+	IEnumerator AttackAnimation()
 	{
 		ClearAllBool();
 		myAnimator.SetBool("attack_01", true);
@@ -86,6 +96,17 @@ public class BossActionManager : MonoBehaviour {
 		yield return new WaitForSeconds(attackTime);
 		isAttacking = false;
 	}
+
+	IEnumerator DeathAnimation()
+	{
+		isAttacking = false;
+		isWalking = false;
+		ClearAllBool();
+		myAnimator.SetBool ("die", true);
+		yield return new WaitForSeconds(attackTime * 6);
+		// Congratulations
+	}
+
 	void ClearAllBool(){
 		myAnimator.SetBool ("defy", false);
 		myAnimator.SetBool ("idle",  false);
