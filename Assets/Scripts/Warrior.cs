@@ -8,13 +8,13 @@ public class Warrior : MonoBehaviour
     public static float maxHp = 1000f;
 	public static float curHp = 1000f;
     public float attackDamage = -10f;
-    public Image healthBar;
+    public Slider healthBar;
     public float invincibilityTime = 1f;
     public bool isInvincible = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthBar.value = maxHp;
     }
 
     // Update is called once per frame
@@ -32,8 +32,7 @@ public class Warrior : MonoBehaviour
         if (updateValue < 0) { // Damage taken, start invincibility
             StartCoroutine(StartInvincibility());
         }
-        //healthBar.fillAmount = curHp / maxHp;
-        Debug.Log(curHp);
+        healthBar.value = curHp / maxHp;
     }
 
     IEnumerator StartInvincibility() {

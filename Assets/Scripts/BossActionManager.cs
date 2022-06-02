@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BossActionManager : MonoBehaviour {
 	private Warrior warrior;
 	public GameObject target;
 	public GameObject hero;
+	public Slider healthBar;
 	public float maxHp = 1000f;
 	public float curHp = 1000f;
 	public float attackDamage = 100f;
-	public float moveSpeed = 10f;
+	public float moveSpeed = 11f;
 	public float rotationSpeed = 6f;
 	public float attackDistance = 8f;
 	public float attackTime = 0.5f;
@@ -24,6 +26,7 @@ public class BossActionManager : MonoBehaviour {
 		warrior = hero.GetComponent<Warrior>();
 		rb = target.GetComponent<Rigidbody>();
 		myAnimator.SetBool("idle", true);
+		healthBar.value = maxHp;
 	}
 	
 	// Update is called once per frame
@@ -77,7 +80,7 @@ public class BossActionManager : MonoBehaviour {
 
 	public void UpdateHp(float updateValue) {
 		curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue;
-		Debug.Log(curHp);
+        healthBar.value = curHp / maxHp;
 	}
 
     void Walk (Vector3 movementDirection)

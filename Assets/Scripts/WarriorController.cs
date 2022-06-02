@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace WarriorAnimsFREE
 {
@@ -12,7 +13,7 @@ namespace WarriorAnimsFREE
 		private Rigidbody rb;
 		public Rigidbody orb;
 		public Rigidbody projectile;
-		public float orbSpeed = 20f;
+		public float orbSpeed = 25f;
 		public float projectileSpeed = 50f;
 		public static Rigidbody orbRb;
 		public static Rigidbody projectileRb;
