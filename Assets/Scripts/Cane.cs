@@ -20,11 +20,9 @@ public class Cane : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         canFire = other.tag != "Collide";
-        Debug.Log(canFire);
     }
     private void OnTriggerExit(Collider other)
     {
         canFire = true;
-        Debug.Log(canFire);
     }
 }

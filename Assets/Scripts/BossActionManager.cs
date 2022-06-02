@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Action_Manage : MonoBehaviour {
-	public GameObject Target;
-	public Transform hero;
+public class BossActionManager : MonoBehaviour {
+	private Warrior warrior;
+	public GameObject target;
+	public GameObject hero;
 	public float maxHp = 1000f;
 	public float curHp = 1000f;
 	public float attackDamage = 100f;
-	public float moveSpeed = 9.5f;
+	public float moveSpeed = 10f;
 	public float rotationSpeed = 6f;
 	public float attackDistance = 8f;
-	public float attackTime = 1f;
+	public float attackTime = 0.5f;
 	public bool isAttacking = false;
 	public bool isWalking = false;
 	private Rigidbody rb;
@@ -18,15 +19,16 @@ public class Action_Manage : MonoBehaviour {
 	Animator myAnimator;
 	// Use this for initialization
 	void Start () {
-		myAnimator = Target.GetComponent<Animator>();
-		rb = Target.GetComponent<Rigidbody>();
+		myAnimator = target.GetComponent<Animator>();
+		warrior = hero.GetComponent<Warrior>();
+		rb = target.GetComponent<Rigidbody>();
 		myAnimator.SetBool("idle", true);
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
-		direction = hero.position - transform.position;
+		direction = hero.transform.position - transform.position;
 		direction.y = 0;
 		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
 	}
@@ -50,13 +52,13 @@ public class Action_Manage : MonoBehaviour {
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag == "Player" && isAttacking)
-            {
-                WarriorController.UpdateHp(-attackDamage);
-            }
-        }
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.tag == "Player" && isAttacking)
+		{
+			warrior.UpdateHp(-attackDamage);
+		}
+	}
 
 	public void UpdateHp(float updateValue) {
 		curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue;
@@ -68,9 +70,9 @@ public class Action_Manage : MonoBehaviour {
 		}
 	}
 
-    void Walk (Vector3 movement_direction)
+    void Walk (Vector3 movementDirection)
     {
-		rb.MovePosition(transform.position + (movement_direction * moveSpeed * Time.deltaTime));
+		rb.MovePosition(transform.position + (movementDirection * moveSpeed * Time.deltaTime));
     }
 
 	IEnumerator Attack()

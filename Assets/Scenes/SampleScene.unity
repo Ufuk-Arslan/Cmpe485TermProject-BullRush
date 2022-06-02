@@ -1180,6 +1180,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4743523076812310332, guid: dd9d3d7655ac3934d9096722ca483868, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6499585571015328519, guid: dd9d3d7655ac3934d9096722ca483868, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1775,7 +1779,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5787965, y: 1}
+    m_SensorSize: {x: 1.9435626, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1791,8 +1795,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870374381}
-  m_LocalRotation: {x: 0.07370091, y: -0.5509918, z: 0.04893734, w: 0.82980806}
-  m_LocalPosition: {x: 53.14443, y: 16.390043, z: -23.22905}
+  m_LocalRotation: {x: 0.07370093, y: -0.5509918, z: 0.048937336, w: 0.8298081}
+  m_LocalPosition: {x: 53.144436, y: 16.390043, z: -23.229052}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999976}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2087,8 +2091,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.07370091, y: -0.5509918, z: 0.04893734, w: 0.82980806}
-  m_LocalPosition: {x: 53.14443, y: 16.390043, z: -23.22905}
+  m_LocalRotation: {x: 0.07370093, y: -0.5509918, z: 0.048937336, w: 0.8298081}
+  m_LocalPosition: {x: 53.144436, y: 16.390043, z: -23.229052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2231,28 +2235,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 113944, guid: b89e0c3c675d2f6468bb44ecbf17fb04, type: 3}
   m_PrefabInstance: {fileID: 184462808}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1074119178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1074119177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa9cad7762507a84db4bbac884cd7d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 1074119177}
-  hero: {fileID: 1641290908}
-  maxHp: 1000
-  curHp: 1000
-  moveSpeed: 10
-  rotationSpeed: 6
-  attackDistance: 8
-  attackTime: 0.5
-  isAttacking: 0
-  isWalking: 0
 --- !u!4 &1074119179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 456436, guid: b89e0c3c675d2f6468bb44ecbf17fb04, type: 3}
@@ -2287,6 +2269,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.3019743, z: 1.7210656}
   m_Center: {x: -0.0000028451755, y: 0.7743821, z: 0.69010776}
+--- !u!114 &1074119186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074119177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8340a64a24341d24681535a1c1d962a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1074119177}
+  hero: {fileID: 1641290900}
+  maxHp: 1000
+  curHp: 1000
+  attackDamage: 100
+  moveSpeed: 10
+  rotationSpeed: 6
+  attackDistance: 8
+  attackTime: 0.5
+  isAttacking: 0
+  isWalking: 0
 --- !u!1 &1118262106
 GameObject:
   m_ObjectHideFlags: 0
