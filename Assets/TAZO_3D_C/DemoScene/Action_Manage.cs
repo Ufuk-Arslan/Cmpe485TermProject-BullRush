@@ -4,6 +4,9 @@ using System.Collections;
 public class Action_Manage : MonoBehaviour {
 	public GameObject Target;
 	public Transform hero;
+	public float maxHp = 1000f;
+	public float curHp = 1000f;
+	public float attackDamage = 100f;
 	public float moveSpeed = 9.5f;
 	public float rotationSpeed = 6f;
 	public float attackDistance = 8f;
@@ -27,6 +30,7 @@ public class Action_Manage : MonoBehaviour {
 		direction.y = 0;
 		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
 	}
+	
     private void FixedUpdate()
     {
 		if (isAttacking) return;
@@ -45,10 +49,30 @@ public class Action_Manage : MonoBehaviour {
 			Walk(direction.normalized);
 		}
 	}
+
+	private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player" && isAttacking)
+            {
+                WarriorController.UpdateHp(-attackDamage);
+            }
+        }
+
+	public void UpdateHp(float updateValue) {
+		curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue;
+		Debug.Log(curHp);
+		if (curHp < 0) {
+			ClearAllBool();
+			myAnimator.SetBool ("die", true);
+			// Congratulations
+		}
+	}
+
     void Walk (Vector3 movement_direction)
     {
 		rb.MovePosition(transform.position + (movement_direction * moveSpeed * Time.deltaTime));
     }
+
 	IEnumerator Attack()
 	{
 		ClearAllBool();

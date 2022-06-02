@@ -9,17 +9,21 @@ namespace WarriorAnimsFREE
 		public Warrior warrior;
 		public GameObject target;
 		public GameObject weapon;
+		public float maxHp = 1000f;
+		public float curHp = 1000f;
 		private Rigidbody rb;
 		public Rigidbody orb;
 		public Rigidbody projectile;
-		public float orb_speed = 20f;
-		public float projectile_speed = 50f;
-		public static Rigidbody orb_rb;
-		public static Rigidbody projectile_rb;
-		public static Vector3 orb_vec;
-		public static Vector3 projectile_vec;
-		public float orb_cooldown = 1f;
-		public float projectile_cooldown = 0.1f;
+		public float orbSpeed = 20f;
+		public float projectileSpeed = 50f;
+		public static Rigidbody orbRb;
+		public static Rigidbody projectileRb;
+		public static Vector3 orbVec;
+		public static Vector3 projectileVec;
+		public bool canUseOrb = true;
+		public float orbCooldown = 1f;
+		public float projectileCooldown = 0.1f;
+		public float invincibilityTime = 1f;
 		[HideInInspector] public SuperCharacterController superCharacterController;
 		[HideInInspector] public WarriorMovementController warriorMovementController;
 		[HideInInspector] public WarriorInputController warriorInputController;
@@ -177,6 +181,14 @@ namespace WarriorAnimsFREE
 			UpdateAnimationSpeed();
 		}
 
+		public void UpdateHp(float updateValue) {
+			curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue;
+			Debug.Log(curHp);
+			if (curHp < 0) {
+				// You lose
+			}
+		}
+
 		/// <summary>
 		/// Updates the Animator with the animation speed multiplier.
 		/// </summary>
@@ -214,7 +226,7 @@ namespace WarriorAnimsFREE
 		/// </summary>
 		private void Attacking()
 		{
-			if (inputAttack && orb_rb)
+			if (inputAttack && orbRb)
 			{
 				Teleport();
 			} else if (inputAttack) {
@@ -237,8 +249,8 @@ namespace WarriorAnimsFREE
 
 		public void Teleport()
         {
-			transform.position = orb_rb.position - new Vector3(0, 2, 0);
-			Destroy(orb_rb.gameObject);
+			transform.position = orbRb.position - new Vector3(0, 2, 0);
+			Destroy(orbRb.gameObject);
 			StartCoroutine(TrailEndWait());
 		}
 
@@ -278,16 +290,16 @@ namespace WarriorAnimsFREE
 					UnLock(lockMovement, lockAction);
 					if (Cane.canFire)
                     {
-						if (actionType == 1 && !orb_rb)
+						if (actionType == 1 && !orbRb)
 						{
-							orb_rb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
-							orb_vec = transform.forward * orb_speed;
+							orbRb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
+							orbVec = transform.forward * orbSpeed;
 							transform.GetComponentInChildren<TrailRenderer>().enabled = true;
 						}
 						else if (actionType == 0)
 						{
-							projectile_rb = Instantiate(projectile, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
-							projectile_vec = transform.forward * projectile_speed;
+							projectileRb = Instantiate(projectile, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
+							projectileVec = transform.forward * projectileSpeed;
 						}
 					}
 				}

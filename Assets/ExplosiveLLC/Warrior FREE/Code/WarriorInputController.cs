@@ -14,13 +14,13 @@ namespace WarriorAnimsFREE
 		
 		private void Update()
 		{
-			if (WarriorController.orb_rb)
+			if (WarriorController.orbRb)
 			{
-				WarriorController.orb_rb.velocity = WarriorController.orb_vec;
+				WarriorController.orbRb.velocity = WarriorController.orbVec;
 			}
-			if (WarriorController.projectile_rb)
+			if (WarriorController.projectileRb)
 			{
-				WarriorController.projectile_rb.velocity = WarriorController.projectile_vec;
+				WarriorController.projectileRb.velocity = WarriorController.projectileVec;
 			}
 
 			Inputs();

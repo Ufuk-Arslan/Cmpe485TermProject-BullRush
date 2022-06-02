@@ -1775,7 +1775,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.34268752, y: 1}
+    m_SensorSize: {x: 1.5787965, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2245,6 +2245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 1074119177}
   hero: {fileID: 1641290908}
+  maxHp: 1000
+  curHp: 1000
   moveSpeed: 10
   rotationSpeed: 6
   attackDistance: 8
@@ -2272,8 +2274,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &1074119182
-CapsuleCollider:
+--- !u!65 &1074119184
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2282,10 +2284,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.52
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.74, z: 0.23}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.3019743, z: 1.7210656}
+  m_Center: {x: -0.0000028451755, y: 0.7743821, z: 0.69010776}
 --- !u!1 &1118262106
 GameObject:
   m_ObjectHideFlags: 0
