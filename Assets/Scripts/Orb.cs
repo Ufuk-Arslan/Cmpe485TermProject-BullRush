@@ -20,13 +20,13 @@ namespace WarriorAnimsFREE
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Level")
+            if (other.tag == "Collide")
             {
-                Destroy(gameObject);
                 if (trail.enabled)
                 {
                     trail.enabled = false;
                 }
+                Destroy(gameObject);
             }
         }
     }

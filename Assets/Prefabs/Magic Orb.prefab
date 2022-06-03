@@ -14412,7 +14412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d4d10f5c208414fa280f3052b98683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trail: {fileID: 0}
+  trail: {fileID: 8303540146184745098, guid: ed81f3242708b474fb26233b7efd2d55, type: 3}
 --- !u!1 &473782676669789007
 GameObject:
   m_ObjectHideFlags: 0

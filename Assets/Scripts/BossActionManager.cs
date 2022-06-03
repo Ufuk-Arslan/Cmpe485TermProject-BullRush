@@ -11,14 +11,24 @@ public class BossActionManager : MonoBehaviour {
 	public float curHp = 1000f;
 	public float attackDamage = 100f;
 	public float moveSpeed = 11f;
+	public float runSpeed = 40f;
+	public float runTriggerDistance = 30f;
+	public float stopRunTriggerDistance = 9f;
 	public float rotationSpeed = 6f;
-	public float attackDistance = 8f;
+	public float attackTriggerDistance = 8f;
 	public float attackTime = 0.5f;
+	public float attackInitTime = 0.4f;
+	public float runDelay = 8f;
 	public bool isAttacking = false;
-	public bool isWalking = false;
+	public bool isAttackEffective = false;
+	public bool isWalking = true;
+	public bool runToWalk = false;
+	public bool isRunning = false;
 	public bool isDead = false;
 	private Rigidbody rb;
 	private Vector3 direction;
+	private Vector3 runDirection;
+	private Vector3 runStart;
 	Animator myAnimator;
 	// Use this for initialization
 	void Start () {
@@ -38,33 +48,63 @@ public class BossActionManager : MonoBehaviour {
 			StartCoroutine(DeathAnimation());
 			return;
 		}
-		direction = hero.transform.position - transform.position;
-		direction.y = 0;
-		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
 	}
 	
     private void FixedUpdate()
     {
 		if (isDead || isAttacking) return;
-		if (direction.magnitude < attackDistance)
+		direction = hero.transform.position - transform.position;
+		direction.y = 0;
+		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
+		if (isRunning) 
+		{
+			float x = transform.position.x;
+			float y = transform.position.y;
+			if ((runStart.x < x && runDirection.x < x) || (runStart.x > x && runDirection.x > x) || (runStart.y < y && runDirection.y < y) || (runStart.y > y && runDirection.y > y))
+			{
+				isRunning = false;
+				runToWalk = true;
+				return;
+			}
+			Run();
+			return;
+		}
+		if (direction.magnitude < attackTriggerDistance)
         {
 			isWalking = false;
+			isRunning = false;
+			runToWalk = false;
 			StartCoroutine(AttackAnimation());
-        } else
-        {
+        } else if (runToWalk || direction.magnitude < runTriggerDistance) 
+		{
 			if (!isWalking)
             {
 				ClearAllBool();
 				myAnimator.SetBool("walk", true);
+				StartCoroutine(DelayRunToWalk());
+				isRunning = false;
 				isWalking = true;
 			}
 			Walk(direction.normalized);
+		} else
+		{
+			if (!isRunning)
+			{
+				ClearAllBool();
+				myAnimator.SetBool("run", true);
+				isRunning = true;
+				isWalking = false;
+				runToWalk = false;
+				isAttackEffective = true;
+				runDirection = direction;
+				runStart = transform.position;
+			}
 		}
 	}
 
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Player" && isAttacking)
+		if (other.tag == "Player" && isAttackEffective)
 		{
 			warrior.UpdateHp(-attackDamage);
 		}
@@ -88,16 +128,29 @@ public class BossActionManager : MonoBehaviour {
 		rb.MovePosition(transform.position + (movementDirection * moveSpeed * Time.deltaTime));
     }
 
+	void Run () {
+		rb.MovePosition(transform.position + (runDirection.normalized * runSpeed * Time.deltaTime));
+	}
+
 	IEnumerator AttackAnimation()
 	{
 		ClearAllBool();
 		myAnimator.SetBool("attack_01", true);
 		isAttacking = true;
+		yield return new WaitForSeconds(attackInitTime);
+		isAttackEffective = true;
 		yield return new WaitForSeconds(attackTime);
 		myAnimator.SetBool("attack_01", false);
 		myAnimator.SetBool("attack_02", true);
 		yield return new WaitForSeconds(attackTime);
+		isAttackEffective = false;
 		isAttacking = false;
+	}
+
+	IEnumerator DelayRunToWalk() 
+	{
+		yield return new WaitForSeconds(runDelay);
+		runToWalk = false;
 	}
 
 	IEnumerator DeathAnimation()

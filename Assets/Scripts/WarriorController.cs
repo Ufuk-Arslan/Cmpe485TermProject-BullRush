@@ -20,8 +20,8 @@ namespace WarriorAnimsFREE
 		public static Vector3 orbVec;
 		public static Vector3 projectileVec;
 		public bool canUseOrb = true;
-		public float orbCooldown = 1f;
-		public float projectileCooldown = 0.1f;
+		public float orbCooldown = 2f;
+		public Image orbIcon;
 		[HideInInspector] public SuperCharacterController superCharacterController;
 		[HideInInspector] public WarriorMovementController warriorMovementController;
 		[HideInInspector] public WarriorInputController warriorInputController;
@@ -219,7 +219,8 @@ namespace WarriorAnimsFREE
 			if (inputAttack && orbRb)
 			{
 				Teleport();
-			} else if (inputAttack) {
+			} else if (inputAttack) 
+			{
 				Attack1(1);
             } else if (inputProjectile)
             {
@@ -242,6 +243,7 @@ namespace WarriorAnimsFREE
 			transform.position = orbRb.position - new Vector3(0, 2, 0);
 			Destroy(orbRb.gameObject);
 			StartCoroutine(TrailEndWait());
+			StartCoroutine(StartOrbCooldown());
 		}
 
 		public IEnumerator TrailEndWait()
@@ -249,6 +251,17 @@ namespace WarriorAnimsFREE
 			yield return new WaitForSeconds(0.3f);
 			transform.GetComponentInChildren<TrailRenderer>().enabled = false;
 		}
+
+		public IEnumerator StartOrbCooldown() {
+            canUseOrb = false;
+			orbIcon.fillAmount = 0;
+			float timeDevider = 60;
+			for (int i = 1; i <= timeDevider; i++) {
+				yield return new WaitForSeconds(orbCooldown/timeDevider);
+				orbIcon.fillAmount = i/timeDevider;
+			}
+            canUseOrb = true;
+        }
 
 			#endregion
 
@@ -280,7 +293,7 @@ namespace WarriorAnimsFREE
 					UnLock(lockMovement, lockAction);
 					if (Cane.canFire)
                     {
-						if (actionType == 1 && !orbRb)
+						if (actionType == 1 && canUseOrb && !orbRb)
 						{
 							orbRb = Instantiate(orb, transform.position + new Vector3(transform.forward.x * 2, 2, transform.forward.z * 2), transform.rotation);
 							orbVec = transform.forward * orbSpeed;
