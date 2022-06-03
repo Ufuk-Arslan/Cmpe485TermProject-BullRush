@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -17,8 +17,10 @@ public class BossActionManager : MonoBehaviour {
 	public float rotationSpeed = 6f;
 	public float attackTriggerDistance = 8f;
 	public float attackTime = 0.5f;
-	public float attackInitTime = 0.4f;
-	public float runDelay = 8f;
+	public float attackInitTime = 0.5f;
+	public float runDuration;
+	public float curRunDruation;
+	public float runDelay = 20f;
 	public bool isAttacking = false;
 	public bool isAttackEffective = false;
 	public bool isWalking = true;
@@ -27,7 +29,7 @@ public class BossActionManager : MonoBehaviour {
 	public bool isDead = false;
 	private Rigidbody rb;
 	private Vector3 direction;
-	private Vector3 runDirection;
+	private Vector3 runFinish;
 	private Vector3 runStart;
 	Animator myAnimator;
 	// Use this for initialization
@@ -58,12 +60,12 @@ public class BossActionManager : MonoBehaviour {
 		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
 		if (isRunning) 
 		{
-			float x = transform.position.x;
-			float y = transform.position.y;
-			if ((runStart.x < x && runDirection.x < x) || (runStart.x > x && runDirection.x > x) || (runStart.y < y && runDirection.y < y) || (runStart.y > y && runDirection.y > y))
+			if (curRunDruation >= runDuration)
 			{
 				isRunning = false;
 				runToWalk = true;
+				rb.velocity = new Vector3(0, 0, 0);
+				StartCoroutine(TrailEndWait());
 				return;
 			}
 			Run();
@@ -73,7 +75,6 @@ public class BossActionManager : MonoBehaviour {
         {
 			isWalking = false;
 			isRunning = false;
-			runToWalk = false;
 			StartCoroutine(AttackAnimation());
         } else if (runToWalk || direction.magnitude < runTriggerDistance) 
 		{
@@ -86,7 +87,7 @@ public class BossActionManager : MonoBehaviour {
 				isWalking = true;
 			}
 			Walk(direction.normalized);
-		} else
+		} else if (!runToWalk)
 		{
 			if (!isRunning)
 			{
@@ -96,8 +97,12 @@ public class BossActionManager : MonoBehaviour {
 				isWalking = false;
 				runToWalk = false;
 				isAttackEffective = true;
-				runDirection = direction;
+				runFinish = hero.transform.position;
+				runFinish.y = transform.position.y;
 				runStart = transform.position;
+				runDuration = Vector3.Distance(runFinish, runStart) / runSpeed;
+				curRunDruation = 0;
+				transform.GetComponentInChildren<TrailRenderer>().enabled = true;
 			}
 		}
 	}
@@ -129,7 +134,14 @@ public class BossActionManager : MonoBehaviour {
     }
 
 	void Run () {
-		rb.MovePosition(transform.position + (runDirection.normalized * runSpeed * Time.deltaTime));
+		curRunDruation += Time.deltaTime;
+		transform.position = Vector3.Lerp(runStart, runFinish, curRunDruation/runDuration);
+	}
+
+	public IEnumerator TrailEndWait()
+	{
+		yield return new WaitForSeconds(0.5f);
+		transform.GetComponentInChildren<TrailRenderer>().enabled = false;
 	}
 
 	IEnumerator AttackAnimation()
