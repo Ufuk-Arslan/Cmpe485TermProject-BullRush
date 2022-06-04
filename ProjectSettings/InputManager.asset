@@ -38,7 +38,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Attack
+    m_Name: Orb
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -60,7 +60,7 @@ InputManager:
     negativeButton: 
     positiveButton: space
     altNegativeButton: 
-    altPositiveButton: joystick button 9
+    altPositiveButton: joystick button 3
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -99,6 +99,38 @@ InputManager:
     snap: 0
     invert: 1
     type: 2
+    axis: 1
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Projectile
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 5
+    altNegativeButton: 
+    altPositiveButton: mouse 0
+    gravity: 1000
+    dead: 0.0001
+    sensitivity: 1000
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 1
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Pause
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.0001
+    sensitivity: 1000
+    snap: 0
+    invert: 1
+    type: 0
     axis: 1
     joyNum: 0
   m_UsePhysicalKeys: 0

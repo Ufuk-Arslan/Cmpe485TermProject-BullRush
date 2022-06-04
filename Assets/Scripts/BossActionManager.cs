@@ -15,8 +15,8 @@ public class BossActionManager : MonoBehaviour {
 	public float runTriggerDistance = 30f;
 	public float stopRunTriggerDistance = 9f;
 	public float rotationSpeed = 6f;
-	public float attackTriggerDistance = 8f;
-	public float attackTime = 0.5f;
+	public float attackTriggerDistance = 6f;
+	public float attackTime = 0.3f;
 	public float attackInitTime = 0.5f;
 	public float runDuration;
 	public float curRunDruation;
@@ -27,6 +27,8 @@ public class BossActionManager : MonoBehaviour {
 	public bool runToWalk = false;
 	public bool isRunning = false;
 	public bool isDead = false;
+	public bool isJumping = false;
+	public float jumpTime = 1f;
 	private Rigidbody rb;
 	private Vector3 direction;
 	private Vector3 runFinish;
@@ -45,8 +47,10 @@ public class BossActionManager : MonoBehaviour {
 	void Update ()
 	{
 		if (isDead) return;
-		if (curHp < 0) {
+		if (curHp <= 0)
+		{
 			isDead = true;
+			StopAllCoroutines();
 			StartCoroutine(DeathAnimation());
 			return;
 		}
@@ -54,7 +58,7 @@ public class BossActionManager : MonoBehaviour {
 	
     private void FixedUpdate()
     {
-		if (isDead || isAttacking) return;
+		if (isDead || isAttacking || isJumping) return;
 		direction = hero.transform.position - transform.position;
 		direction.y = 0;
 		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
@@ -66,6 +70,7 @@ public class BossActionManager : MonoBehaviour {
 				runToWalk = true;
 				rb.velocity = new Vector3(0, 0, 0);
 				StartCoroutine(TrailEndWait());
+				StartCoroutine(JumpAttack());
 				return;
 			}
 			Run();
@@ -91,8 +96,6 @@ public class BossActionManager : MonoBehaviour {
 		{
 			if (!isRunning)
 			{
-				ClearAllBool();
-				myAnimator.SetBool("run", true);
 				isRunning = true;
 				isWalking = false;
 				runToWalk = false;
@@ -103,6 +106,7 @@ public class BossActionManager : MonoBehaviour {
 				runDuration = Vector3.Distance(runFinish, runStart) / runSpeed;
 				curRunDruation = 0;
 				transform.GetComponentInChildren<TrailRenderer>().enabled = true;
+				StartCoroutine(JumpAttack());
 			}
 		}
 	}
@@ -138,7 +142,7 @@ public class BossActionManager : MonoBehaviour {
 		transform.position = Vector3.Lerp(runStart, runFinish, curRunDruation/runDuration);
 	}
 
-	public IEnumerator TrailEndWait()
+	IEnumerator TrailEndWait()
 	{
 		yield return new WaitForSeconds(0.5f);
 		transform.GetComponentInChildren<TrailRenderer>().enabled = false;
@@ -151,12 +155,22 @@ public class BossActionManager : MonoBehaviour {
 		isAttacking = true;
 		yield return new WaitForSeconds(attackInitTime);
 		isAttackEffective = true;
-		yield return new WaitForSeconds(attackTime);
-		myAnimator.SetBool("attack_01", false);
+		yield return new WaitForSeconds(attackTime - attackInitTime);
 		myAnimator.SetBool("attack_02", true);
 		yield return new WaitForSeconds(attackTime);
 		isAttackEffective = false;
 		isAttacking = false;
+	}
+
+	IEnumerator JumpAttack()
+    {
+		isJumping = true;
+		ClearAllBool();
+		myAnimator.SetBool("attack_03", true);
+		yield return new WaitForSeconds(jumpTime);
+		isJumping = false;
+		ClearAllBool();
+		myAnimator.SetBool("run", true);
 	}
 
 	IEnumerator DelayRunToWalk() 
@@ -189,57 +203,5 @@ public class BossActionManager : MonoBehaviour {
 		myAnimator.SetBool ("attack_03", false);
 		myAnimator.SetBool ("attack_02", false);
 		myAnimator.SetBool ("damage", false);
-	}
-	public void Pressed_damage(){
-		ClearAllBool();
-		myAnimator.SetBool ("damage", true);
-	}
-	public void Pressed_idle(){
-		ClearAllBool();
-		myAnimator.SetBool ("idle", true);
-	}
-	public void Pressed_defy(){
-		ClearAllBool();
-		myAnimator.SetBool ("defy", true);
-	}
-	public void Pressed_dizzy(){
-		ClearAllBool();
-		myAnimator.SetBool ("dizzy", true);
-	}
-	public void Pressed_run(){
-		ClearAllBool();
-		myAnimator.SetBool ("run", true);
-	}
-	public void Pressed_walk(){
-		ClearAllBool();
-		myAnimator.SetBool ("walk", true);
-	}
-	public void Pressed_die(){
-		ClearAllBool();
-		myAnimator.SetBool ("die", true);
-	}
-	public void Pressed_jump(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump", true);
-	}
-	public void Pressed_jump_left(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump_left", true);
-	}
-	public void Pressed_jump_right(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump_right", true);
-	}
-	public void Pressed_attack_01(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_01", true);
-	}
-	public void Pressed_attack_02(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_02", true);
-	}
-	public void Pressed_attack_03(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_03", true);
 	}
 }

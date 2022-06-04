@@ -2,88 +2,93 @@ using UnityEngine;
 using System.Collections;
 
 public class Minion : MonoBehaviour {
-	public GameObject Target;
+	private Warrior warrior;
+	public GameObject target;
+	public GameObject hero;
+	public GameObject collectible;
+	private Rigidbody rb;
 	Animator myAnimator;
+	private Vector3 direction;
+	public bool isAppearing = true;
+	public Vector3 startPos;
+	public Vector3 endPos;
+	private float curAppearDruation;
+	private float appearDuration = 3f;
+	public float rotationSpeed = 10f;
+	public float moveSpeed = 6f;
+	public float attackDamage = 50f;
+	public int collectibleChance = 50;
 	// Use this for initialization
 	void Start () {
-		myAnimator = Target.GetComponent<Animator> ();
-		
+		myAnimator = target.GetComponent<Animator> ();
+		rb = target.GetComponent<Rigidbody>();
+		hero = GameObject.FindWithTag("Player");
+		warrior = hero.GetComponent<Warrior>();
+		myAnimator.SetBool("Taunt", true);
+		startPos = target.transform.position;
+		endPos = new Vector3(startPos.x, 0.8f, startPos.z);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown("space"))
+
+	}
+    private void FixedUpdate()
+    {
+		if (isAppearing)
+		{
+			Appear();
+			return;
+		}
+		direction = hero.transform.position - transform.position;
+		direction.y = 0;
+		rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.FromToRotation(Vector3.forward, direction), rotationSpeed * Time.deltaTime);
+		Walk(direction.normalized);
+	}
+
+	public void Appear()
+    {
+		curAppearDruation += Time.deltaTime;
+		transform.position = Vector3.Lerp(startPos, endPos, curAppearDruation / appearDuration);
+		if (curAppearDruation >= appearDuration)
         {
-            print("space key was pressed");
-            myAnimator.SetBool ("Dizzy", true);
-        }
-        
+			isAppearing = false;
+			ClearAllBool();
+			myAnimator.SetBool("WalkFWD", false);
+		}
 	}
+	void Walk(Vector3 movementDirection)
+	{
+		rb.MovePosition(transform.position + (movementDirection * moveSpeed * Time.deltaTime));
+	}
+
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.tag == "Player")
+		{
+			warrior.UpdateHp(-attackDamage);
+		}
+	}
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Projectile")
+		{
+			int chance = Random.Range(0, 100);
+			if (chance >= collectibleChance)
+            {
+				Vector3 collectiblePos = target.transform.position;
+				collectiblePos.y += 2f;
+				Instantiate(collectible, collectiblePos, Quaternion.identity);
+            }
+			Destroy(target);
+		}
+	}
+
 	void ClearAllBool(){
-		myAnimator.SetBool ("defy", false);
-		myAnimator.SetBool ("idle",  false);
-		myAnimator.SetBool ("dizzy", false);
-		myAnimator.SetBool ("walk", false);
-		myAnimator.SetBool ("run", false);
-		myAnimator.SetBool ("jump", false);
-		myAnimator.SetBool ("die", false);
-		myAnimator.SetBool ("jump_left", false);
-		myAnimator.SetBool ("jump_right", false);
-		myAnimator.SetBool ("attack_01", false);
-		myAnimator.SetBool ("attack_03", false);
-		myAnimator.SetBool ("attack_02", false);
-		myAnimator.SetBool ("damage", false);
-	}
-	public void Pressed_damage(){
-		ClearAllBool();
-		myAnimator.SetBool ("damage", true);
-	}
-	public void Pressed_idle(){
-		ClearAllBool();
-		myAnimator.SetBool ("idle", true);
-	}
-	public void Pressed_defy(){
-		ClearAllBool();
-		myAnimator.SetBool ("defy", true);
-	}
-	public void Pressed_dizzy(){
-		ClearAllBool();
-		myAnimator.SetBool ("dizzy", true);
-	}
-	public void Pressed_run(){
-		ClearAllBool();
-		myAnimator.SetBool ("run", true);
-	}
-	public void Pressed_walk(){
-		ClearAllBool();
-		myAnimator.SetBool ("walk", true);
-	}
-	public void Pressed_die(){
-		ClearAllBool();
-		myAnimator.SetBool ("die", true);
-	}
-	public void Pressed_jump(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump", true);
-	}
-	public void Pressed_jump_left(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump_left", true);
-	}
-	public void Pressed_jump_right(){
-		ClearAllBool();
-		myAnimator.SetBool ("jump_right", true);
-	}
-	public void Pressed_attack_01(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_01", true);
-	}
-	public void Pressed_attack_02(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_02", true);
-	}
-	public void Pressed_attack_03(){
-		ClearAllBool();
-		myAnimator.SetBool ("attack_03", true);
+		myAnimator.SetBool ("IdleNormal", false);
+		myAnimator.SetBool ("WalkFWD",  false);
+		myAnimator.SetBool ("Attack01", false);
+		myAnimator.SetBool ("Die", false);
+		myAnimator.SetBool ("Taunt", false);
 	}
 }

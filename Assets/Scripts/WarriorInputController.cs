@@ -32,8 +32,8 @@ namespace WarriorAnimsFREE
 		/// </summary>
 		private void Inputs()
 		{
-			inputAttack = Input.GetButtonDown("Attack");
-			inputProjectile = Input.GetMouseButton(0);
+			inputAttack = Input.GetButtonDown("Orb");
+			inputProjectile = Input.GetButton("Projectile");
 			inputJump = Input.GetButtonDown("Jump");
 			inputHorizontal = Input.GetAxisRaw("Horizontal");
 			inputVertical = Input.GetAxisRaw("Vertical");

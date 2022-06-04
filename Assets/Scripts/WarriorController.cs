@@ -20,7 +20,7 @@ namespace WarriorAnimsFREE
 		public static Vector3 orbVec;
 		public static Vector3 projectileVec;
 		public bool canUseOrb = true;
-		public float orbCooldown = 2f;
+		public float orbCooldown = 1f;
 		public Image orbIcon;
 		[HideInInspector] public SuperCharacterController superCharacterController;
 		[HideInInspector] public WarriorMovementController warriorMovementController;

@@ -9,6 +9,7 @@ TagManager:
   - Level
   - Boss
   - Projectile
+  - Minion
   layers:
   - Default
   - TransparentFX

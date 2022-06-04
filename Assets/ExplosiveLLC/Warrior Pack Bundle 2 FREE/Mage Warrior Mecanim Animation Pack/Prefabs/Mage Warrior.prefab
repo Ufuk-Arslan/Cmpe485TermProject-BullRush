@@ -1950,6 +1950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9186795781410057772}
+  - component: {fileID: 281159844487776627}
   - component: {fileID: 2529216466026754667}
   - component: {fileID: 6499585571015328519}
   - component: {fileID: 4743523076812310307}
@@ -1981,6 +1982,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &281159844487776627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186795781410484748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef84a43ebce4f6d4f86afe622e9f0453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionPrefab: {fileID: 0}
+  isWaitingForMinion: 0
+  minionWaitTime: 5
+  arenaRadius: 140
 --- !u!114 &2529216466026754667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1993,8 +2010,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fc73e4a8b6b2f48a6b57abfccb9c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDamage: -10
   healthBar: {fileID: 0}
   invincibilityTime: 1
+  isInvincible: 0
 --- !u!114 &6499585571015328519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2028,7 +2047,7 @@ MonoBehaviour:
   projectileSpeed: 50
   canUseOrb: 1
   orbCooldown: 1
-  projectileCooldown: 0.1
+  orbIcon: {fileID: 0}
   superCharacterController: {fileID: 0}
   warriorMovementController: {fileID: 0}
   warriorInputController: {fileID: 0}

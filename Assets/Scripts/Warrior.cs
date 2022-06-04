@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class Warrior : MonoBehaviour
 {
-    public static float maxHp = 1000f;
-	public static float curHp = 1000f;
+    public float maxHp = 1000f;
+	public float curHp = 1000f;
     public float attackDamage = -10f;
     public Slider healthBar;
     public float invincibilityTime = 1f;
     public bool isInvincible = false;
+    public GameObject damageEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,6 @@ public class Warrior : MonoBehaviour
     {
         if (curHp < 0) {
            // Defeat
-           Debug.Log("Defeated");
         }
     }
     
@@ -31,6 +32,7 @@ public class Warrior : MonoBehaviour
         curHp = maxHp < curHp+updateValue ? maxHp : curHp+updateValue; // Mathf.Clamp(val, min, max)
         if (updateValue < 0) { // Damage taken, start invincibility
             StartCoroutine(StartInvincibility());
+            Instantiate(damageEffect, transform.position, Quaternion.identity);
         }
         healthBar.value = curHp / maxHp;
     }
