@@ -4,7 +4,7 @@
 
 - If you wish to play the game on your windows machine, please download [this zip file](https://github.com/Ufuk-Arslan/Cmpe485TermProject/blob/main/Build.zip) and run `Bull Rush.exe`.
 
-- If you want to check out project and the code, please visit the [assets folder](https://github.com/Ufuk-Arslan/Cmpe485TermProject/tree/main/Assets).
+- If you want to check out the project and the code, please visit the [assets folder](https://github.com/Ufuk-Arslan/Cmpe485TermProject/tree/main/Assets).
 
 Hope you like our game :D
 
