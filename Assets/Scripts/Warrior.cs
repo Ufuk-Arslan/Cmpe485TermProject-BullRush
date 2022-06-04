@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class Warrior : MonoBehaviour
 {
-    public float maxHp = 2000f;
-	public float curHp = 2000f;
-    public float attackDamage = -10f;
+    public float maxHp = 1000f;
+	public float curHp = 1000f;
+    public float attackDamage = -15f;
     public Slider healthBar;
-    public float invincibilityTime = 1f;
+    public float invincibilityTime = 0.5f;
     public bool isInvincible = false;
     public GameObject damageEffect;
 

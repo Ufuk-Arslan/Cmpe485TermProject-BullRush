@@ -25,6 +25,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 	void Start () {
 		hero = GameObject.FindWithTag("Player");
 		warrior = hero.GetComponent<Warrior>();
+		hpAmount /= DifficultySelection.difficultyMultiplier;
 	}
 	
 	// Update is called once per frame

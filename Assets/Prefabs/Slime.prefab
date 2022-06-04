@@ -458,7 +458,7 @@ MonoBehaviour:
   endPos: {x: 0, y: 0, z: 0}
   rotationSpeed: 6
   moveSpeed: 6
-  attackDamage: 50
+  attackDamage: -50
   collectibleChance: 50
 --- !u!136 &8979172212252155326
 CapsuleCollider:

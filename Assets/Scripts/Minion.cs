@@ -16,8 +16,8 @@ public class Minion : MonoBehaviour {
 	private float appearDuration = 3f;
 	public float rotationSpeed = 10f;
 	public float moveSpeed = 6f;
-	public float attackDamage = 50f;
-	public int collectibleChance = 50;
+	public float attackDamage = -50f;
+	public float collectibleChance = 50f;
 	// Use this for initialization
 	void Start () {
 		myAnimator = target.GetComponent<Animator> ();
@@ -67,7 +67,7 @@ public class Minion : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			warrior.UpdateHp(-attackDamage);
+			warrior.UpdateHp(attackDamage);
 		}
 	}
 	private void OnTriggerEnter(Collider other)

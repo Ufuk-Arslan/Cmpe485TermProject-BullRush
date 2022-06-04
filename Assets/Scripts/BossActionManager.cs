@@ -9,15 +9,15 @@ public class BossActionManager : MonoBehaviour {
 	public GameObject target;
 	public GameObject hero;
 	public Slider healthBar;
-	public float maxHp = 500f;
-	public float curHp = 500f;
-	public float attackDamage = 100f;
+	public float maxHp = 1000f;
+	public float curHp = 1000f;
+	public float attackDamage = -80f;
 	public float moveSpeed = 11f;
 	public float runSpeed = 40f;
 	public float runTriggerDistance = 30f;
 	public float stopRunTriggerDistance = 9f;
 	public float rotationSpeed = 6f;
-	public float attackTriggerDistance = 6f;
+	public float attackTriggerDistance = 7f;
 	public float attackTime = 0.3f;
 	public float attackInitTime = 0.5f;
 	public float runDuration;
@@ -123,7 +123,7 @@ public class BossActionManager : MonoBehaviour {
 	{
 		if (other.tag == "Player" && isAttackEffective)
 		{
-			warrior.UpdateHp(-attackDamage);
+			warrior.UpdateHp(attackDamage);
 		}
 	}
 

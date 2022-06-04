@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class DifficultySelection : MonoBehaviour
 {
-    public static int difficultyMultiplier = 1;
+    public static float difficultyMultiplier = 1;
 
     public void PlayGame()
     {
@@ -21,11 +21,11 @@ public class DifficultySelection : MonoBehaviour
 
     public void setNormal()
     {
-        difficultyMultiplier = 2;
+        difficultyMultiplier = 1.4f;
     }
 
     public void setHard()
     {
-        difficultyMultiplier = 4;
+        difficultyMultiplier = 2f;
     }
 }
