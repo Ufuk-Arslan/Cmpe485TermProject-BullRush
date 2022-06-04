@@ -6,6 +6,8 @@
 
 - If you want to check out the project and the code, please visit the [assets folder](https://github.com/Ufuk-Arslan/Cmpe485TermProject/tree/main/Assets).
 
+- You can clone this repository and check the project on your own Unity editor. ([Recommended Unity version 2021.2.13f1](https://unity3d.com/unity/whats-new/2021.2.13))
+
 Hope you like our game :D
 
 [Ufuk Arslan](https://github.com/Ufuk-Arslan), [Gökhan Uysal](https://github.com/uysalGokhan)
