@@ -1,4 +1,4 @@
-# Cmpe 485 Term Project Bull Rush
+# Cmpe 485 Term Project - Bull Rush
 
 - For more information, please refer to the [project report](https://github.com/Ufuk-Arslan/Cmpe485TermProject/blob/main/CMPE485%20Term%20Project%20Report.pdf).
 
