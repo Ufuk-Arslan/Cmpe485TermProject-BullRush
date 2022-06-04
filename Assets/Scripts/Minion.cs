@@ -75,7 +75,7 @@ public class Minion : MonoBehaviour {
 		if (other.tag == "Projectile")
 		{
 			int chance = Random.Range(0, 100);
-			if (chance >= collectibleChance)
+			if (chance <= collectibleChance)
             {
 				Vector3 collectiblePos = target.transform.position;
 				collectiblePos.y += 2f;
