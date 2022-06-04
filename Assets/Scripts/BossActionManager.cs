@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class BossActionManager : MonoBehaviour {
 	private Warrior warrior;
 	public GameObject target;
 	public GameObject hero;
 	public Slider healthBar;
-	public float maxHp = 1000f;
-	public float curHp = 1000f;
+	public float maxHp = 500f;
+	public float curHp = 500f;
 	public float attackDamage = 100f;
 	public float moveSpeed = 11f;
 	public float runSpeed = 40f;
@@ -40,6 +42,8 @@ public class BossActionManager : MonoBehaviour {
 		warrior = hero.GetComponent<Warrior>();
 		rb = target.GetComponent<Rigidbody>();
 		myAnimator.SetBool("idle", true);
+		maxHp *= DifficultySelection.difficultyMultiplier;
+		curHp = maxHp;
 		healthBar.value = maxHp;
 	}
 	
@@ -58,6 +62,10 @@ public class BossActionManager : MonoBehaviour {
 	
     private void FixedUpdate()
     {
+        if (isDead)
+        {
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+		}
 		if (isDead || isAttacking || isJumping) return;
 		direction = hero.transform.position - transform.position;
 		direction.y = 0;

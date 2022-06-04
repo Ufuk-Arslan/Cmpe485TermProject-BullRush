@@ -27,6 +27,7 @@ public class Minion : MonoBehaviour {
 		myAnimator.SetBool("Taunt", true);
 		startPos = target.transform.position;
 		endPos = new Vector3(startPos.x, 0.8f, startPos.z);
+		collectibleChance /= DifficultySelection.difficultyMultiplier;
 	}
 
 	// Update is called once per frame

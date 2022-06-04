@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Warrior : MonoBehaviour
 {
-    public float maxHp = 1000f;
-	public float curHp = 1000f;
+    public float maxHp = 2000f;
+	public float curHp = 2000f;
     public float attackDamage = -10f;
     public Slider healthBar;
     public float invincibilityTime = 1f;
@@ -16,15 +18,23 @@ public class Warrior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHp /= DifficultySelection.difficultyMultiplier;
+        curHp = maxHp;
         healthBar.value = maxHp;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         if (curHp < 0) {
-           // Defeat
+           Dead();
         }
+    }
+
+    void Dead()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
     public void UpdateHp(float updateValue) {

@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject minionPrefab;
+    public GameObject pauseMenu;
     public bool isWaitingForMinion = false;
     public float minionWaitTime = 5f;
     public float arenaRadius = 120f;
+    public static bool isPaused = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
         if (isWaitingForMinion) return;
         StartCoroutine(DeployMinion());
     }
@@ -33,5 +46,18 @@ public class GameManager : MonoBehaviour
         isWaitingForMinion = true;
         yield return new WaitForSeconds(minionWaitTime);
         isWaitingForMinion = false;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        isPaused = true;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        isPaused = false;
     }
 }
