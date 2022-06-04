@@ -37,8 +37,6 @@ public class Arena : MonoBehaviour
             }
             else
             {
-                Debug.Log("Svaaaaaaaaaaaa");
-
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
                 //if (Vector3.Distance(transform.position, Target.position) < 4.5f)
                     //transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);

@@ -31,6 +31,7 @@ public class BossActionManager : MonoBehaviour {
 	public bool isDead = false;
 	public bool isJumping = false;
 	public float jumpTime = 1f;
+	public float deathAnimTime = 6f;
 	private Rigidbody rb;
 	private Vector3 direction;
 	private Vector3 runFinish;
@@ -62,10 +63,6 @@ public class BossActionManager : MonoBehaviour {
 	
     private void FixedUpdate()
     {
-        if (isDead)
-        {
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
-		}
 		if (isDead || isAttacking || isJumping) return;
 		direction = hero.transform.position - transform.position;
 		direction.y = 0;
@@ -97,6 +94,7 @@ public class BossActionManager : MonoBehaviour {
 				myAnimator.SetBool("walk", true);
 				StartCoroutine(DelayRunToWalk());
 				isRunning = false;
+				isAttackEffective = false;
 				isWalking = true;
 			}
 			Walk(direction.normalized);
@@ -107,7 +105,6 @@ public class BossActionManager : MonoBehaviour {
 				isRunning = true;
 				isWalking = false;
 				runToWalk = false;
-				isAttackEffective = true;
 				runFinish = hero.transform.position;
 				runFinish.y = transform.position.y;
 				runStart = transform.position;
@@ -176,6 +173,7 @@ public class BossActionManager : MonoBehaviour {
 		ClearAllBool();
 		myAnimator.SetBool("attack_03", true);
 		yield return new WaitForSeconds(jumpTime);
+		isAttackEffective = !isAttackEffective;
 		isJumping = false;
 		ClearAllBool();
 		myAnimator.SetBool("run", true);
@@ -190,11 +188,12 @@ public class BossActionManager : MonoBehaviour {
 	IEnumerator DeathAnimation()
 	{
 		isAttacking = false;
+		isAttackEffective = false;
 		isWalking = false;
 		ClearAllBool();
 		myAnimator.SetBool ("die", true);
-		yield return new WaitForSeconds(attackTime * 6);
-		// Congratulations
+		yield return new WaitForSeconds(deathAnimTime);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
 	}
 
 	void ClearAllBool(){

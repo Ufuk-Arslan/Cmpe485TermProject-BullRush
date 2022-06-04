@@ -1874,6 +1874,10 @@ PrefabInstance:
       propertyPath: minionPrefab
       value: 
       objectReference: {fileID: 3642916694917482691, guid: f51b2571c4199ac4b87c0e7a3b4c35ec, type: 3}
+    - target: {fileID: 281159844487776627, guid: dd9d3d7655ac3934d9096722ca483868, type: 3}
+      propertyPath: minionWaitTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2529216466026754667, guid: dd9d3d7655ac3934d9096722ca483868, type: 3}
       propertyPath: curHp
       value: 1000
@@ -3258,7 +3262,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7665002, y: 1}
+    m_SensorSize: {x: 2.841891, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3274,8 +3278,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870374381}
-  m_LocalRotation: {x: 0.20243424, y: 0.029634284, z: -0.0061287507, w: 0.9788282}
-  m_LocalPosition: {x: -2.510648, y: 18.833197, z: -41.425686}
+  m_LocalRotation: {x: 0.20243426, y: 0.029634252, z: -0.0061287447, w: 0.9788282}
+  m_LocalPosition: {x: -2.5106468, y: 18.833199, z: -41.42569}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999976}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3716,8 +3720,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.20243424, y: 0.029634284, z: -0.0061287507, w: 0.9788282}
-  m_LocalPosition: {x: -2.510648, y: 18.833197, z: -41.425686}
+  m_LocalRotation: {x: 0.20243426, y: 0.029634252, z: -0.0061287447, w: 0.9788282}
+  m_LocalPosition: {x: -2.5106468, y: 18.833199, z: -41.42569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4007,6 +4011,7 @@ MonoBehaviour:
   isDead: 0
   isJumping: 0
   jumpTime: 1
+  deathAnimTime: 6
 --- !u!1001 &1089013522
 PrefabInstance:
   m_ObjectHideFlags: 0

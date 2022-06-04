@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public float minionWaitTime = 5f;
     public float arenaRadius = 120f;
     public static bool isPaused = false;
+    public int minionCount = 0;
+    public int minionLimit = 250;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
             }
         }
         if (isWaitingForMinion) return;
+        if (minionCount >= minionLimit) return;
         StartCoroutine(DeployMinion());
     }
 
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         float z = Mathf.Sin(angle) * arenaRadius * range;
         Vector3 deployPosition = new Vector3(x, -2, z);
         Instantiate(minionPrefab, deployPosition, Quaternion.identity);
+        minionCount += 1;
         isWaitingForMinion = true;
         yield return new WaitForSeconds(minionWaitTime);
         isWaitingForMinion = false;
